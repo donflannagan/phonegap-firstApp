@@ -1,9 +1,9 @@
-$('#reposHome').bind('pageinit', function(event) {
+$('#reposHome').bind('pageinit', function (event) {
 	loadRepos();
 });
 
 function loadRepos() {
-    $.ajax("https://api.github.com/legacy/repos/search/javascript").done(function(data) {
+    $.ajax("https://api.github.com/legacy/repos/search/javascript").done(function (data) {
         var i, repo;
         $.each(data.repositories, function (i, repo) {
             $("#allRepos").append("<li><a href='repo-detail.html?owner=" + repo.username + "&name=" + repo.name + "'>"
