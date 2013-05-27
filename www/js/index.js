@@ -1,8 +1,8 @@
-var db;
-
 $('#reposHome').bind('pageinit', function(event) {
     loadRepos();
-    
+    if(window.localStorage.getItem("dbCreated") == null) {
+        opendDB();
+    }
 });
 
 function loadRepos() {

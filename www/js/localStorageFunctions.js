@@ -1,6 +1,9 @@
+var db;
+
 function opendDB() {
     db = window.openDatabase("repodb","0.1","GitHub Repo Db", 1000);
     db.transaction(createDb, txError, txSuccess);   
+    window.localStorage.setItem("dbCreated", true);
 }
 
 function createDb(tx) {
