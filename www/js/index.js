@@ -1,5 +1,8 @@
-$('#reposHome').bind('pageinit', function (event) {
-	loadRepos();
+var db;
+
+$('#reposHome').bind('pageinit', function(event) {
+    loadRepos();
+    
 });
 
 function loadRepos() {
@@ -19,6 +22,8 @@ $('#reposDetail').live('pageshow', function(event) {
     var owner = getUrlVars().owner;
     var name = getUrlVars().name;
     loadRepoDetail(owner,name);
+    $("#saveBtn").bind("click", saveFave);
+    checkFave();
 });
 
 function loadRepoDetail(owner,name) {
@@ -33,4 +38,23 @@ function loadRepoDetail(owner,name) {
          $('#avatar').attr('src', repo.owner.avatar_url);
          $('#ownerName').html("<strong>Owner:</strong> <a href='" + repo.owner.url + "'>" + repo.owner.login + "</a>");
      });
+}
+
+function txSuccessFave() {
+    console.log("Save success");
+    disableSaveButton();
+}
+
+function disableSaveButton() {
+    // change the button text and style
+    var ctx = $("#saveBtn").closest(".ui-btn");
+    $('span.ui-btn-text',ctx).text("Saved").closest(".ui-btn-inner").addClass("ui-btn-up-b");
+    $("#saveBtn").unbind("click", saveFave);
+}
+
+function txSuccessCheckFave(tx,results) {
+    console.log("Read success");
+    console.log(results);
+    if (results.rows.length)
+         disableSaveButton();
 }
